@@ -14,8 +14,8 @@ import parsing
 import dijkstra
 
 # 
-def basic_test() -> None:
-    G = parsing.graph_from_file(join(TDIR,'small_test.graph'))
+def small_test_very_naive() -> None:
+    G = parsing.from_file(join(TDIR,'small_test.graph'))
     res = dijkstra.very_naive_dijkstra(G, 'A', 'E', maximize_weight=False)
     assert(res != None)
     print(res)
@@ -24,12 +24,12 @@ def basic_test() -> None:
     assert(res['path'] == ['A', 'B', 'C', 'D', 'E'])
     assert(res['cost'] - 1.4 < 0.001)
 def failure_test() -> None:
-    G = parsing.graph_from_file(join(TDIR,'small_test.graph'))
+    G = parsing.from_file(join(TDIR,'small_test.graph'))
     res = dijkstra.very_naive_dijkstra(G, 'A', 'UC_A', maximize_weight=False)
     assert(res == None)
 
 def run_all():
-    basic_test()
+    small_test_very_naive()
     failure_test()
     print(f"Tests from {__file__} passed.")
 

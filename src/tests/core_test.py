@@ -14,7 +14,7 @@ import parsing
 
 #
 def test_neighbors() -> None:
-    G = parsing.graph_from_file(join(TDIR,'small_test.graph'))
+    G = parsing.from_file(join(TDIR,'small_test.graph'))
     assert(neighbors(G, 'C') == ['B', 'D', 'E'])
     
 def run_all() -> None:

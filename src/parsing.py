@@ -1,4 +1,4 @@
-__all__ = ['graph_from_file']
+__all__ = ['from_file']
 
 from core import *
 
@@ -15,8 +15,7 @@ def _parsing_assign(D: WeightedGraph, Key1, Key2, Value: float) -> None:
 def _parsing_note(D, Key):
     if not Key in D.keys():
         D[Key] = {}
-def graph_from_file(file_location: str) -> WeightedGraph:
-    
+def from_file(file_location: str) -> WeightedGraph:
     G: dict = {}
     file = open(file_location, mode='rt')
     lines = file.readlines()
@@ -30,7 +29,19 @@ def graph_from_file(file_location: str) -> WeightedGraph:
         elif 0 < len(comps) < 3:
             _parsing_note(G, comps[0])
     return G
-
+def from_text(text: str) -> WeightedGraph:
+    G: dict = {}
+    lines = text.splitlines()
+    for line in lines:
+        line = line.strip()
+        comps = [C for C in line.split() if C != '']
+        if len(comps) >= 3:
+            v = float(comps[2])
+            if 0.0 < v <= 1:
+                _parsing_assign(G, comps[0], comps[1], v)
+        elif 0 < len(comps) < 3:
+            _parsing_note(G, comps[0])
+    return G
 
 
 

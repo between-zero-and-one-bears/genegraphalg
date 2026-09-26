@@ -6,7 +6,7 @@ type WeightedGraph = dict[Any, dict[Any, float]]
 
 
 # There's no way to natively make symmetric dictionaries in Python, so I just wrote a few small functions.
-def access(D: WeightedGraph, Key1: Any, Key2: Any) -> float:
+def access(D: WeightedGraph, Key1: Any, Key2: Any, /, default_to_inf = False) -> float:
     """
     Args:
         D (two-layer dict to float): the graph
@@ -21,10 +21,19 @@ def access(D: WeightedGraph, Key1: Any, Key2: Any) -> float:
     if Key1 in D.keys():
         if Key2 in D[Key1].keys():
             return D[Key1][Key2]
-        else:
-            return 0.0
-    else:
-        return 0.0
+    
+    return float('infinity') if default_to_inf else 0.0
+...
+def compare_weighted_graphs(D1: WeightedGraph, D2: WeightedGraph):
+    ns = nodes_set(D1)
+    if ns != nodes_set(D2):
+        return False
+    nl = list(ns)
+    for a in range(len(ns)):
+        for b in range(a, len(ns)):
+            if access(D1, nl[a], nl[b]) - access(D2, nl[a], nl[b]) > 0.01:
+                return False
+    return True
 def assign(D: WeightedGraph, Key1: Any, Key2: Any, Value: float) -> None:
     if Key2 > Key1:
         Key1, Key2 = Key2, Key1

@@ -31,7 +31,7 @@ def linclust_deorder_helper(original: list[tuple[list[Any], Any]]) -> frozenset[
 #
 
 def test_GIC_small() -> None:
-    G = parsing.graph_from_file(TDIR+'\\small_test.graph')
+    G = parsing.from_file(TDIR+'\\small_test.graph')
     Cs_l: list[tuple[list[str], str]] = greedy_incremental_clustering(G)
     Cs = set()
     for C in Cs_l:
