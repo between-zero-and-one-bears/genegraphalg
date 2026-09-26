@@ -1,12 +1,13 @@
-__all__ = ['naive_dijkstra', 'very_naive_dijkstra']
+__all__ = ['very_naive_dijkstra']
 
 from core import *
 
 pos_inf = float('inf')
 
-def naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /) -> None|dict[str, list[Any]|float]:
+'''def naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /, maximize_weight=True) -> None|dict[str, list[Any]|float]:
     """
     Runs a probably-badly-optimized Dijkstra path search algorithm.
+    CURRENTLY DOES NOT WORK.
 
     Args:
         G (two-layer dict to float): A simple weighted graph.
@@ -17,6 +18,8 @@ def naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /) -> None|dict[s
         None, if the algorithm fails;
         {'path': list[Any], 'cost': float}, if it finds a path. 'path' is the sequence of nodes (including the beginning and end point) and 'cost' is the sum of the weights of the edges between consecutive nodes in the path.
     """
+    
+    proc: Callable[[float], float] = (lambda x: 1/x) if maximize_weight else (lambda x: x)  
     
     def update_best(best: dict[str, dict], node, source, edge_cost: float) -> None:
         if not node in best.keys():
@@ -42,7 +45,7 @@ def naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /) -> None|dict[s
     done = False
     queued_nodes = [[origin, 0.0]]
     explored_nodes = []
-    best = {origin: {'src':None, 'cost':0.0}}
+    best: dict[Any, dict[str, Any]] = {origin: {'src':None, 'cost':0.0}}
     # best = {node: [previous, total]}
     step_no = 0
     while (not done) and len(queued_nodes) > 0:
@@ -52,7 +55,7 @@ def naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /) -> None|dict[s
         for neighbor in neighbors(G, node):
             if neighbor in explored_nodes:
                 continue
-            cost = access(G, neighbor, node)
+            cost = proc(access(G, neighbor, node))
             update_best(best, neighbor, node, cost)
             new.append(neighbor)
         update_queue(queued_nodes, best, new)
@@ -78,6 +81,8 @@ def naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /) -> None|dict[s
         print("DEBUG: Never found a path.")
         print(best)
         return None
+'''
+
 
 def very_naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /, maximize_weight=True) -> None | dict[str, list[Any]|float]:
     """
@@ -150,7 +155,7 @@ def very_naive_dijkstra(G: WeightedGraph, origin: Any, target: Any, /, maximize_
             if neighbor not in border:
                 border.append(neighbor)
     return None
-                
+
             
             
             

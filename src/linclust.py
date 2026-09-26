@@ -105,7 +105,7 @@ def linclust(Tags: Mapping[Any, Sequence[Any]], Similarity: Callable[[Any, Any],
     nodes_list = list(map(lambda x: x[0], nodes_by_centerness))
     
     # tags_to_explore is a set of tags which have been picked to ensure every node has at least a minimum number of its tags as possible clusters it would belong to.
-    tags_to_explore = set()
+    tags_to_explore: set[Any] = set()
     # not_done tracks the set of nodes which have not had this process done upon them.
     for node in nodes_list:
         lacking = tag_groups_per_seq - len(intersection(Tags[node], tags_to_explore))
@@ -148,7 +148,7 @@ def linclust(Tags: Mapping[Any, Sequence[Any]], Similarity: Callable[[Any, Any],
                 item_center_assignment[item] = {center}
     print(centers_set)
     print(item_center_assignment)
-    clusters_dict = {center:[] for center in centers_set}
+    clusters_dict: dict[Any, list[Any]] = {center:[] for center in centers_set}
     for item in item_center_assignment.keys():
         # Compare to every relevant cluster's center.
         chosen = None

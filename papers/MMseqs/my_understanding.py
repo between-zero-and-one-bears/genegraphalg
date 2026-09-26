@@ -1,5 +1,7 @@
 ### my reconstruction of their algorithm follows
-
+from core import TYPE_CHECKING
+if TYPE_CHECKING:
+    quit()
 
 ## module (i): prefilter
 

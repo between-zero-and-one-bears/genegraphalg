@@ -17,7 +17,7 @@ def _parsing_note(D, Key):
         D[Key] = {}
 def graph_from_file(file_location: str) -> WeightedGraph:
     
-    G = {}
+    G: dict = {}
     file = open(file_location, mode='rt')
     lines = file.readlines()
     for line in lines:

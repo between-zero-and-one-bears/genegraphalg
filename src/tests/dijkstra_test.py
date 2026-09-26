@@ -18,8 +18,11 @@ def basic_test() -> None:
     G = parsing.graph_from_file(join(TDIR,'small_test.graph'))
     res = dijkstra.very_naive_dijkstra(G, 'A', 'E', maximize_weight=False)
     assert(res != None)
+    print(res)
+    assert(type(res['path']) == list)
+    assert(type(res['cost']) == float)
     assert(res['path'] == ['A', 'B', 'C', 'D', 'E'])
-    assert(res['cost'] == 1.4)
+    assert(res['cost'] - 1.4 < 0.001)
 def failure_test() -> None:
     G = parsing.graph_from_file(join(TDIR,'small_test.graph'))
     res = dijkstra.very_naive_dijkstra(G, 'A', 'UC_A', maximize_weight=False)

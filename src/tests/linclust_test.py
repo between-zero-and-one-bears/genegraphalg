@@ -51,7 +51,7 @@ def test_linclust_minimal() -> None:
     correct = fs((fs(1, 2, 3), 2))
     output = linclust_deorder_helper(linclust(Tags=Tags, Similarity=Sim))
     assert(correct==output)    
-def test_A() -> None:
+""" def test_A() -> None:
     Tags = {
         1: [1],
         2: [1, 2],
@@ -76,7 +76,7 @@ def test_A() -> None:
     Sim = lambda x, y: access(G, x, y)
     output = linclust_deorder_helper(linclust(Tags=Tags, Similarity=Sim))
     print(output)
-    InterruptedError
+    InterruptedError """
 def run_all() -> None:
     #test_A()
     #test_linclust_minimal()

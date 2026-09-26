@@ -38,8 +38,9 @@ def pop_edge(D: WeightedGraph, Key1: Any, Key2: Any) -> float|None:
     if Key1 in D.keys():
         if Key2 in D[Key1].keys():
             return D[Key1].pop(Key2)
+    return None
 def neighbors(D: WeightedGraph, Key1: Any) -> list[Any]:
-    neighbors_list = []
+    neighbors_list: list[Any] = []
     if Key1 in D.keys():
         neighbors_list.extend(D[Key1].keys())
     for Key2 in D.keys():
