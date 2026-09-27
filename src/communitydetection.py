@@ -1,6 +1,8 @@
 # Louvain community detection method
 #  https://en.wikipedia.org/wiki/Louvain_method
 #
+__all__ = ['get_modularity', 'louvain', 'leiden']
+
 from typing import Mapping
 from core import *
 def get_modularities(G: WeightedGraph, communities: Iterable[Iterable[Any]]) -> list[float]:
@@ -38,7 +40,16 @@ def get_modularity(G: WeightedGraph, C: Mapping[Any, Any]) -> float:
     modularity /= (2*m)
     return modularity
 
-def louvain(G: WeightedGraph):
+def louvain(G: WeightedGraph) -> set[frozenset[Any]]:
+    """
+    Louvain community detection algorithm.
+
+    Args:
+        G (WeightedGraph): The graph to partition.
+
+    Returns:
+        frozenset[frozenset[Any]]: A partition of the graph's vertices.
+    """
     
     ...
     # def phase_1(G: WeightedGraph, C: dict[Any, int], nl: list[int]) -> tuple[dict[Any, int], float]:
@@ -134,6 +145,6 @@ def louvain(G: WeightedGraph):
             break 
         G_communities = phase_2(G_communities, false_mapping)
     
-    return C
+    return map_to_set(invert_map(C))
     
     

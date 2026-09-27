@@ -1,0 +1,31 @@
+LA1 LA2 1           Acquired from https://en.wikipedia.org/wiki/Leiden_algorithm.
+LA1 LA3 1
+LA2 C 1
+LA3 C 1
+LB1 LB2 1
+LB1 LB3 1
+LB2 C 1
+LB3 C 1
+
+G1 G2 1
+G3 G4 1
+G5 G6 1
+G7 G8 1
+
+G1 G3 1
+G3 G5 1
+G5 G7 1
+G2 G4 1
+G4 G6 1
+G6 G8 1
+
+C G1 1
+C G2 1
+C G3 1
+C G4 1
+C G5 1
+C G6 1
+C G7 1
+C G8 1          This next line is, as usual, to test behaviour with disconnected components.
+
+U

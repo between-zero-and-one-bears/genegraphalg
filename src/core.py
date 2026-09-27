@@ -1,7 +1,7 @@
-__all__ = ['Any', 'Callable', 'TypeVar', 'Iterable', 'Sequence', 'access', 'assign', 'pop_edge', 'neighbors', 'binary_search', 'WeightedGraph', 'nodes_set', 'intersection', 'asym_difference', 'fs']
+__all__ = ['Any', 'Callable', 'TypeVar', 'Iterable', 'Sequence', 'access', 'assign', 'pop_edge', 'neighbors', 'binary_search', 'WeightedGraph', 'nodes_set', 'intersection', 'asym_difference', 'fs', 'invert_map', 'map_to_set']
 
 # For static typing.
-from typing import Any, TYPE_CHECKING, Callable, TypeVar, Iterable, Sequence
+from typing import Any, TYPE_CHECKING, Callable, TypeVar, Iterable, Sequence, Mapping
 type WeightedGraph = dict[Any, dict[Any, float]]
 
 
@@ -24,14 +24,25 @@ def access(D: WeightedGraph, Key1: Any, Key2: Any, /, default_to_inf = False) ->
     
     return float('infinity') if default_to_inf else 0.0
 ...
-def compare_weighted_graphs(D1: WeightedGraph, D2: WeightedGraph):
-    ns = nodes_set(D1)
-    if ns != nodes_set(D2):
+def compare_weighted_graphs(G1: WeightedGraph, G2: WeightedGraph, /, tolerance: float = 0.01) -> bool:
+    """
+    Checks if two weighted graphs are the same, up to isomorphism with respect to vertex labels
+
+    Args:
+        G₁ (WeightedGraph)
+        G₂ (WeightedGraph)
+        tolerance (float): Maximum error on any edge before returning False.
+
+    Returns:
+        bool: If the set of vertex names V is the same for each, and ∀ v, w ∈ V, (G₁[v w] ≈ G₂[v w]) within the provided tolerance, then return True.
+    """
+    ns = nodes_set(G1)
+    if ns != nodes_set(G2):
         return False
     nl = list(ns)
     for a in range(len(ns)):
         for b in range(a, len(ns)):
-            if access(D1, nl[a], nl[b]) - access(D2, nl[a], nl[b]) > 0.01:
+            if access(G1, nl[a], nl[b]) - access(G2, nl[a], nl[b]) > 0.01:
                 return False
     return True
 def assign(D: WeightedGraph, Key1: Any, Key2: Any, Value: float) -> None:
@@ -89,8 +100,48 @@ def asym_difference(L1: Iterable[Any], L2: Iterable[Any]) -> set[Any]:
         if not i in L2:
             out.add(i)
     return out
-def fs(*args: Any):
+def fs(*args: Any) -> frozenset[Any]:
+    """
+    Args:
+        a, b, c, ...
+
+    Returns:
+        {a, b, c, ...} as a frozenset
+    """
     s = set()
     for item in args:
         s.add(item)
     return frozenset(s)
+def invert_map(D: Mapping[Any, Any]) -> dict[Any, frozenset[Any]]:
+    """
+    Args:
+        Mapping[A, B]
+
+    Returns:
+        dict[B, frozenset[A]]
+    """
+    I: dict[Any, set[Any]] = {}
+    V: set[Any] = set()
+    for v in D.keys():
+        v = D[v]
+        if v in V:
+            I[v].add(v)
+        else:
+            V.add(v)
+            I[v] = {v}
+    F: dict[Any, frozenset[Any]] = {}
+    for v in I.keys():
+        F[v] = frozenset(I[v])
+    return F
+def map_to_set(D: Mapping[Any, Any]) -> set[Any]:
+    """
+    Args:
+        Mapping[A, B]
+
+    Returns:
+        set[B]
+    """
+    V: set[Any] = set()
+    for key in D.keys():
+        V.add(D[key])
+    return V
