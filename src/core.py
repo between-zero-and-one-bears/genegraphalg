@@ -1,8 +1,10 @@
-__all__ = ['Any', 'Callable', 'TypeVar', 'Iterable', 'Sequence', 'access', 'assign', 'pop_edge', 'neighbors', 'binary_search', 'WeightedGraph', 'nodes_set', 'intersection', 'asym_difference', 'fs', 'invert_map', 'map_to_set']
+__all__ = ['Any', 'Callable', 'TypeVar', 'Iterable', 'Sequence', 'access', 'assign', 'pop_edge', 'neighbors', 'binary_search', 'WeightedGraph', 'nodes_set', 'intersection', 'asym_difference', 'fs', 'invert_map', 'map_to_set', 'inf']
 
 # For static typing.
 from typing import Any, TYPE_CHECKING, Callable, TypeVar, Iterable, Sequence, Mapping
 type WeightedGraph = dict[Any, dict[Any, float]]
+
+inf = float("infinity")
 
 
 # There's no way to natively make symmetric dictionaries in Python, so I just wrote a few small functions.

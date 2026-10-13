@@ -1,7 +1,7 @@
 # Louvain community detection method
 #  https://en.wikipedia.org/wiki/Louvain_method
 #
-__all__ = ['get_modularity', 'louvain', 'leiden']
+__all__ = ['get_modularity', 'louvain', ]
 
 from typing import Mapping
 from core import *
@@ -27,6 +27,7 @@ def get_modularity(G: WeightedGraph, C: Mapping[Any, Any]) -> float:
     for key1 in G.keys():
         for key2 in G[key1].keys():
             m += G[key1][key2]
+    print(m)
     nl = list(nodes_set(G))
     k = {}
     for n in nl:
@@ -141,10 +142,13 @@ def louvain(G: WeightedGraph) -> set[frozenset[Any]]:
     G_communities = phase_2(G, C)
     while True:
         C, false_mapping, new_modularity = phase_1(G_communities, C, nl, modularity)
+        print(f"modularity: {modularity}")
+        print(f"G_communities: {G_communities}")
+        print(f"C: {C}")
         if new_modularity <= modularity:
             break 
         G_communities = phase_2(G_communities, false_mapping)
     
     return map_to_set(invert_map(C))
-    
+
     

@@ -1,4 +1,4 @@
-__all__ = ['from_file']
+__all__ = ['from_file', 'from_text']
 
 from core import *
 
